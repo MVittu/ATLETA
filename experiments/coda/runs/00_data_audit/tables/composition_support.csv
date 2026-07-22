@@ -1,0 +1,5 @@
+"component","zero_count","mean_raw_score","log_variance_positive","selected_reference"
+"prep_carbon",61,3.63501483679525,0.358623082383407,FALSE
+"prep_noncarbon",11,6.54302670623145,0.152533175360263,TRUE
+"competition_carbon",40,4.12462908011869,0.286842534598123,FALSE
+"competition_noncarbon",34,5.06824925816024,0.301872541774702,FALSE

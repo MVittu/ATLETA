@@ -1,0 +1,2 @@
+"model","max_rhat","min_bulk_proxy_neff","divergences","max_treedepth_hits","min_ebfmi","chains","iterations","warmup"
+"primary_association",1.00310664527964,653.177610648471,0,0,0.661584403768596,4,2000,1000

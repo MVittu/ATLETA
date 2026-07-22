@@ -1,0 +1,21 @@
+"measure","group","n","mean","sd","median","q1","q3","smd_vs_competition_only"
+"Participation impact","Overall",193,17.72,6.63,17,17,25,NA
+"Participation impact","Preparation only",50,18.04,6.7,17,17,25,0.14
+"Participation impact","Competition only",84,17.1,6.95,17,8,25,0
+"Participation impact","Both periods",59,18.34,6.12,17,17,25,0.19
+"Training-volume impact","Overall",193,18.67,6.92,17,17,25,NA
+"Training-volume impact","Preparation only",50,18.16,7.57,17,8,25,0.01
+"Training-volume impact","Competition only",84,18.07,6.93,17,8,25,0
+"Training-volume impact","Both periods",59,19.97,6.24,25,17,25,0.29
+"Performance impact","Overall",193,18.7,7.25,17,17,25,NA
+"Performance impact","Preparation only",50,16.34,7.99,17,8,25,-0.35
+"Performance impact","Competition only",84,18.92,6.54,17,17,25,0
+"Performance impact","Both periods",59,20.39,7.15,25,17,25,0.22
+"Symptoms","Overall",193,15.38,7.62,17,8,25,NA
+"Symptoms","Preparation only",50,14.18,7.89,17,8,17,-0.01
+"Symptoms","Competition only",84,14.25,7.08,17,8,17,0
+"Symptoms","Both periods",59,18.02,7.59,17,17,25,0.51
+"Total severity","Overall",193,70.48,21.71,75,58,92,NA
+"Total severity","Preparation only",50,66.72,24.19,71.5,50,90,-0.07
+"Total severity","Competition only",84,68.33,20.09,67,58,84,0
+"Total severity","Both periods",59,76.71,20.74,84,67,92,0.41

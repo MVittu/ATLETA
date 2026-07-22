@@ -1,0 +1,43 @@
+"age_group","sex","specialty","population_estimate","population_lower","population_upper"
+"assoluta","donne","velocità",43,40,45
+"assoluta","donne","mezzofondo",23,21,24
+"assoluta","donne","fondo",20,18,20
+"assoluta","donne","ostacoli",36,33,37
+"assoluta","donne","salto con l'asta",11,10,11
+"assoluta","donne","salti in estensione",28,26,29
+"assoluta","donne","prove multiple",9,8,9
+"assoluta","uomini","velocità",51,44,55
+"assoluta","uomini","mezzofondo",35,30,38
+"assoluta","uomini","fondo",38,33,41
+"assoluta","uomini","ostacoli",30,26,33
+"assoluta","uomini","salto con l'asta",8,7,9
+"assoluta","uomini","salti in estensione",14,12,15
+"assoluta","uomini","prove multiple",8,7,9
+"under20","donne","velocità",39,39,53
+"under20","donne","mezzofondo",31,31,41
+"under20","donne","fondo",38,38,51
+"under20","donne","ostacoli",50,50,67
+"under20","donne","salto con l'asta",10,10,13
+"under20","donne","salti in estensione",25,25,34
+"under20","donne","prove multiple",11,11,15
+"under20","uomini","velocità",66,66,77
+"under20","uomini","mezzofondo",43,43,50
+"under20","uomini","fondo",53,53,62
+"under20","uomini","ostacoli",81,81,94
+"under20","uomini","salto con l'asta",18,18,21
+"under20","uomini","salti in estensione",23,23,27
+"under20","uomini","prove multiple",26,26,30
+"under23","donne","velocità",54,53,56
+"under23","donne","mezzofondo",34,33,35
+"under23","donne","fondo",28,27,28
+"under23","donne","ostacoli",49,48,50
+"under23","donne","salto con l'asta",9,9,9
+"under23","donne","salti in estensione",25,24,25
+"under23","donne","prove multiple",13,13,14
+"under23","uomini","velocità",59,58,60
+"under23","uomini","mezzofondo",37,37,38
+"under23","uomini","fondo",37,37,38
+"under23","uomini","ostacoli",58,57,59
+"under23","uomini","salto con l'asta",14,14,14
+"under23","uomini","salti in estensione",30,29,30
+"under23","uomini","prove multiple",13,13,13

@@ -1,0 +1,41 @@
+# R project files
+.Rhistory
+.RData
+.RDataTmp
+.Ruserdata
+.Rproj.user/
+Rplots.pdf
+plots/
+data/
+.private-backup/
+
+# Participant-level and detailed recruitment-monitoring exports
+tables/recall/survey_clean.csv
+tables/recall/survey_strata_membership.csv
+tables/recall/current_sample_by_stratum.csv
+tables/recall/recall_targets_by_stratum.csv
+!experiments/coda/runs/**/plots/
+!experiments/coda/runs/**/plots/*.png
+!experiments/multilevel/runs/**/plots/
+!experiments/multilevel/runs/**/plots/*.png
+!experiments/multilevel/plots/
+!experiments/multilevel/plots/*.png
+
+# Machine-specific compiled Stan caches
+experiments/multilevel/model.rds
+experiments/multilevel/weighted_model.rds
+
+# Local paper references and generated LaTeX intermediates
+paper/docs/*
+!paper/docs/.gitkeep
+paper/latex/*.aux
+paper/latex/*.bbl
+paper/latex/*.blg
+paper/latex/*.fdb_latexmk
+paper/latex/*.fls
+paper/latex/*.log
+paper/latex/*.out
+paper/latex/*.synctex.gz
+
+# Claude Code worktrees
+.claude/

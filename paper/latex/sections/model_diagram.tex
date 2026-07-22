@@ -1,0 +1,108 @@
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  >=Latex,
+  every node/.style={font=\normalsize},
+  latent/.style={draw, ellipse, fill=blue!7, minimum height=10mm, align=center, inner sep=2pt},
+  data/.style={draw, rounded corners=2pt, fill=black!8, minimum height=10mm, align=center, inner sep=2pt},
+  term/.style={draw, rounded corners=2pt, fill=green!8, minimum height=10mm, align=center, inner sep=2pt},
+  outcome/.style={draw, ellipse, fill=black!18, minimum height=12mm, align=center, inner sep=2pt},
+  summary/.style={draw, dashed, rounded corners=2pt, fill=orange!8, minimum height=10mm, align=center, inner sep=2pt},
+  plate/.style={draw, rounded corners=4pt, inner sep=6mm},
+  arrow/.style={->, thick}
+]
+
+
+  \node[latent]                  (alpha)        at (-1.0, 0)     {$\alpha_p$\\$\mathcal N(\operatorname{logit}(0.4),1.5^2)$};
+  \node[latent]                  (exposurecoef) at (4.7, 0)      {$\beta^{\mathrm{any}}_p,\boldsymbol\beta^{\mathrm{share}}_p$\\$\mathcal N(0,0.7^2)$};
+  \node[latent]                  (commoncoef)   at (10.0, 0)     {$\boldsymbol\beta$\\$\mathcal N(0,0.5^2)$};
+  \node[latent]                  (discscale)    at (13.5, 0)     {$\tau_{\mathrm{disc}}$\\$\operatorname{Half\text{-}N}(0,0.5^2)$};
+  \node[latent]                  (athscale)     at (17.5, 0)     {$\sigma_u$\\$\operatorname{Half\text{-}N}(0,1^2)$};
+
+
+  \node[data]                    (period)       at (-1.0, -2.3)  {period $p$\\preparation / competition};
+  \node[data]                    (adoptioninput) at (3.0, -2.3)  {any carbon use\\$A_{ip}=\mathbb 1(s_{ip}>0)$};
+  \node[data]                    (doseinput)     at (6.4, -2.3)  {carbon share\\$s_{ip}$; basis $\mathbf B(s_{ip})$};
+  \node[data]                    (covariates)   at (10.0, -2.3)  {covariates\\$\mathbf X_{ip}$};
+  \node[latent]                  (disccoef)     at (13.5, -2.3)  {$\delta_d$, $d=1,\ldots,7$\\$\mathcal N(0,\tau_{\mathrm{disc}}^2)$};
+  \node[latent]                  (athleteeffect) at (17.5, -2.3) {$u_i$, $i=1,\ldots,352$\\$\mathcal N(0,\sigma_u^2)$};
+
+
+  \node[term]                    (adoptionterm) at (3.0, -4.6)   {adoption\\$A_{ip}\beta^{\mathrm{any}}_p$};
+  \node[term]                    (doseterm)     at (6.4, -4.6)   {dose among users\\$\mathbf B(s_{ip})\boldsymbol\beta^{\mathrm{share}}_p$};
+
+
+  \node[term]                    (interceptterm)  at (-1.0, -6.6) {$\alpha_p$};
+  \node[term]                    (exposureterm)   at (4.7, -6.6)  {carbon contribution\\$c_{ip}=c^{\mathrm{adoption}}_{ip}+c^{\mathrm{dose}}_{ip}$};
+  \node[term]                    (covariateterm)  at (10.0, -6.6) {$\mathbf X_{ip}\boldsymbol\beta$};
+  \node[term]                    (discterm)       at (13.5, -6.6) {$\mathbf Z_i\boldsymbol\delta$};
+  \node[term]                    (athleteterm)    at (17.5, -6.6) {$u_i$};
+
+
+  \node[term, minimum width=48mm] (periodassembly) at (9.0, -9.1)
+    {evaluate the linear predictor\\separately for each period};
+
+  \node[term, minimum width=38mm] (etaprep) at (5.8, -11.2)
+    {$\eta_{i,\mathrm{prep}}=\operatorname{logit}(\pi_{i,\mathrm{prep}})$};
+  \node[term, minimum width=38mm] (etacomp) at (12.2, -11.2)
+    {$\eta_{i,\mathrm{comp}}=\operatorname{logit}(\pi_{i,\mathrm{comp}})$};
+
+
+  \node[outcome] (prepoutcome) at (5.8, -13.4) {$Y_{i,\mathrm{prep}}$\\$\operatorname{Bernoulli}(\pi_{i,\mathrm{prep}})$};
+  \node[outcome] (compoutcome) at (12.2, -13.4) {$Y_{i,\mathrm{comp}}$\\$\operatorname{Bernoulli}(\pi_{i,\mathrm{comp}})$};
+
+
+  \node[summary] (anyoutcome) at (9.0, -16.2) {descriptive any-period injury\\$Y_i^{\mathrm{any}}=\max(Y_{i,\mathrm{prep}},Y_{i,\mathrm{comp}})$};
+
+  \begin{pgfonlayer}{background}
+
+    \draw[arrow] (alpha) -- (interceptterm);
+    \draw[arrow] (period) -- (interceptterm);
+
+
+    \draw[arrow] (exposurecoef.south west) to[out=-100,in=90] (adoptionterm.north);
+    \draw[arrow] (exposurecoef.south east) to[out=-80,in=90] (doseterm.north);
+    \draw[arrow] (adoptioninput) -- (adoptionterm);
+    \draw[arrow] (doseinput) -- (doseterm);
+    \draw[arrow] (adoptionterm) -- (exposureterm.north west);
+    \draw[arrow] (doseterm) -- (exposureterm.north east);
+
+
+    \draw[arrow] (commoncoef) -- (covariateterm);
+    \draw[arrow] (covariates) -- (covariateterm);
+
+
+    \draw[arrow] (discscale) -- (disccoef);
+    \draw[arrow] (disccoef) -- (discterm);
+
+
+    \draw[arrow] (athscale) -- (athleteeffect);
+    \draw[arrow] (athleteeffect) -- (athleteterm);
+
+
+    \draw[arrow] (interceptterm.south) to[out=-90,in=160] (periodassembly.west);
+    \draw[arrow] (exposureterm.south) to[out=-90,in=150] (periodassembly.north west);
+    \draw[arrow] (covariateterm) -- (periodassembly.north);
+    \draw[arrow] (discterm.south) to[out=-90,in=30] (periodassembly.north east);
+    \draw[arrow] (athleteterm.south) to[out=-90,in=20] (periodassembly.east);
+
+
+    \draw[arrow] (periodassembly.south west) to[out=-100,in=90] (etaprep.north);
+    \draw[arrow] (periodassembly.south east) to[out=-80,in=90] (etacomp.north);
+
+    \draw[arrow] (etaprep) -- (prepoutcome);
+    \draw[arrow] (etacomp) -- (compoutcome);
+
+
+    \draw[arrow] (prepoutcome.south) to[out=-90,in=140] (anyoutcome.north west);
+    \draw[arrow] (compoutcome.south) to[out=-90,in=40] (anyoutcome.north east);
+  \end{pgfonlayer}
+
+  \node[plate, fit=(periodassembly)(etaprep)(etacomp)(prepoutcome)(compoutcome)] (modelplate) {};
+  \node[anchor=west, align=left] at ([xshift=3mm]modelplate.east) {$352$ athletes\\$\times\,2$ periods};
+\end{tikzpicture}%
+}
+\caption{Graphical representation of the primary Bayesian multilevel model. Grey boxes are observed inputs, blue ellipses are estimated parameters, green boxes are deterministic contributions to the linear predictor, and shaded ellipses are the two observed period-specific injury outcomes, jointly enclosed in the solid plate (352 athletes $\times$ 2 periods). The carbon contribution $c_{ip}$ combines adoption ($A_{ip}$, any carbon use) and dose ($\mathbf B(s_{ip})$, the centered three-degree-of-freedom natural-spline basis for carbon share among users). $\mathbf Z_i$ denotes the seven discipline indicators underlying the partially pooled coefficients $\delta_d$, and $u_i$ the shared athlete random intercept. The common model structure is evaluated separately as $\eta_{i,\mathrm{prep}}$ and $\eta_{i,\mathrm{comp}}$; each predictor points only to its corresponding outcome. The dashed box is the derived any-period injury indicator reported descriptively, outside the probabilistic-model plate, and is not an additional likelihood term.}
+\label{fig:primary-model-graph}
+\end{figure}

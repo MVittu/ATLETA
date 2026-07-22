@@ -1,0 +1,89 @@
+\documentclass[11pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{siunitx}
+\usepackage[margin=1in]{geometry}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{lineno}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,backgrounds,positioning,fit,shapes.geometric}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+
+\graphicspath{{../figures/}}
+
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+\setlength{\tabcolsep}{4pt}
+
+\title{Carbon-plate insole use and self-reported injury prevalence among\\
+Italian competitive athletics athletes: a cross-sectional, Bayesian\\
+multilevel analysis of a two-phase recruited cohort}
+\author{Anonymized Author 1 \and Anonymized Author 2}
+\date{}
+
+\begin{document}
+\linenumbers
+\modulolinenumbers[1]
+
+\maketitle
+\label{sec:title}
+
+\begin{abstract}
+\label{sec:abstract}
+\input{sections/abstract}
+\end{abstract}
+
+\noindent\textbf{Keywords:} athletics; track and field; carbon-fiber plate; advanced footwear technology; injury surveillance; Bayesian multilevel model; STROBE-SIIS.
+
+\section{Introduction}
+\label{sec:introduction}
+\input{sections/introduction}
+
+\section{Methods}
+\label{sec:methods}
+\input{sections/methods}
+
+\section{Results}
+\label{sec:results}
+\input{sections/results}
+
+\section{Discussion}
+\label{sec:discussion}
+\input{sections/discussion}
+
+\section*{Ethics}
+\input{sections/ethics}
+
+\section*{Funding}
+\label{sec:funding}
+None declared.
+
+\section*{Data and code availability}
+Analysis code, aggregate tables, and the reproducible manuscript source are publicly available at \url{https://github.com/MVittu/ATLETA}. Individual-level survey responses and detailed recruitment-monitoring cells are not publicly shared because participant consent and ethics safeguards do not authorize open release.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+
+\appendix
+
+\section{STROBE-SIIS reporting checklist}
+\label{sec:strobe-checklist}
+\input{sections/strobe_checklist}
+
+\section{Software and session information}
+\label{sec:session-info}
+\input{sections/session_info}
+
+\section{Supplementary tables}
+\label{sec:supplement}
+\input{sections/supplement}
+
+\end{document}

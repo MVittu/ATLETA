@@ -1,0 +1,2 @@
+"mode","posterior_draws","seed","primary_reference","primary_selected_model","zero_replacement","covariance","validation"
+"full",1000,20260719,"prep_noncarbon","type_V_discipline_profile","zeros only; positive scores unchanged; row then closed","unrestricted 3x3 logistic-normal residual covariance","exact leave-one-athlete-out joint predictive density"

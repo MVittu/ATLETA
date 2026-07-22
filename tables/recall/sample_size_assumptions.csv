@@ -1,0 +1,2 @@
+"method","prior","credible_level","target_half_width","population_estimate","target_sample"
+"Bayesian beta-binomial worst-case proportion","Beta(1,1)",0.95,0.06,1328,264

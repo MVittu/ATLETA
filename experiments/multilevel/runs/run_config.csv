@@ -1,0 +1,2 @@
+"mode","seed","chains","iterations","warmup","athletes","period_records","primary_model","primary_exposure","primary_estimands","validation"
+"full",20260719,4,2000,1000,352,704,"Bayesian repeated-period logistic model with athlete random intercept","any carbon use plus natural spline of carbon share among users","marginal adjusted prevalence differences and ratios","athlete-grouped marginal PSIS-LOO using 15-point Gauss-Hermite quadrature"

@@ -1,0 +1,130 @@
+\begin{table}[htbp]
+\centering
+\caption{Discipline support in the balanced analysis cohort. Codes 8--11 (relay, throws, race walk, and one further unused code) had zero respondents and were excluded from discipline-level adjustment.}
+\label{tab:discipline-support}
+\begin{tabular}{llrl}
+\toprule
+Code & Discipline & n & Included in model \\
+\midrule
+1 & Sprint & 107 & Yes \\
+2 & Middle distance & 69 & Yes \\
+3 & Long distance & 59 & Yes \\
+4 & Hurdles & 96 & Yes \\
+5 & Horizontal jumps & 44 & Yes \\
+6 & Pole vault & 19 & Yes \\
+7 & Combined events & 41 & Yes \\
+8--11 & (zero respondents) & 0 & No \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{FIDAL competition-registry counts used to construct the 2026 eligible-population frame. Under 20 counts for 2026 were used directly. Because 2026 counts were not yet available for Under 23 and Senior athletes when recruitment was planned, their sex-specific frame estimates were the rounded means of the 2023--2025 counts. The resulting age--sex frame totaled 1328 athletes; 2025 discipline shares within each age--sex cell were used to allocate stratum targets.}
+\label{tab:population-frame-history}
+\begin{tabular}{llrrrrr}
+\toprule
+Age group & Sex & 2023 & 2024 & 2025 & 2026 & Frame estimate \\
+\midrule
+Under 20 & Women & 235 & 265 & 274 & 204 & 204 \\
+Under 20 & Men & 327 & 361 & 338 & 311 & 311 \\
+Under 23 & Women & 217 & 211 & 207 & -- & 212 \\
+Under 23 & Men & 244 & 247 & 252 & -- & 248 \\
+Senior & Women & 176 & 176 & 156 & -- & 169 \\
+Senior & Men & 195 & 199 & 159 & -- & 184 \\
+\midrule
+Total & & 1394 & 1459 & 1386 & -- & 1328 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Bayesian worst-case population-proportion precision calculation used to set Phase 2 (targeted recall) enrollment targets. The calculation set a minimum recruitment target; representativeness was addressed separately through stratified recall and poststratification.}
+\label{tab:sample-size}
+\begin{tabular}{lr}
+\toprule
+Quantity & Value \\
+\midrule
+Planning quantity & Population proportion \\
+Prior & Beta(1,1) \\
+Worst-case count & $x=\lfloor n/2\rfloor$ \\
+Posterior at candidate $n$ & Beta$(1+x,1+n-x)$ \\
+Interval and target & Equal-tailed 95\% CrI; half-width $\leq 0.06$ \\
+$n=263$ half-width & 0.060038 \\
+$n=264$ half-width & 0.059926 \\
+Estimated eligible population & 1328 \\
+Minimum target sample & 264 (19.9\% of frame) \\
+Consented, eligible, complete & 355 (26.7\% of frame) \\
+Balanced analysis cohort & 352 (26.5\% of frame) \\
+Target allocation & Proportional across 42 strata \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Age--sex poststratification weight diagnostics (Section~\ref{sec:weighting}). Model weight is the regularized ratio of target population share to sample share; Kish effective sample size after weighting was 340.5 (97\% of $N=352$).}
+\label{tab:weight-diagnostics}
+\begin{tabular}{llrrrr}
+\toprule
+Age group & Sex & Target $n$ & Sample $n$ & Sample share & Model weight \\
+\midrule
+Under 20 & Women & 204 & 43 & 12.2\% & 1.26 \\
+Under 23 & Women & 212 & 53 & 15.1\% & 1.06 \\
+Senior & Women & 169 & 62 & 17.6\% & 0.72 \\
+Under 20 & Men & 311 & 71 & 20.2\% & 1.16 \\
+Under 23 & Men & 248 & 63 & 17.9\% & 1.04 \\
+Senior & Men & 184 & 60 & 17.0\% & 0.81 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Age- and sex-conditional posterior estimate of the competition-period dose association (75th vs.\ 25th percentile carbon share among users), holding the primary model structure and covariate adjustment fixed. These are descriptive, hypothesis-generating comparisons (Section~\ref{sec:subgroups}), not independently powered tests of effect modification.}
+\label{tab:subgroups}
+\begin{tabular}{llrr}
+\toprule
+Grouping & Level & Difference, pp (95\% CrI) & P(positive) \\
+\midrule
+Sex & Men & 15.4 (3.3 to 26.9) & 99.4\% \\
+Sex & Women & 14.4 (3.2 to 25.5) & 99.4\% \\
+Age group & Under 20 & 14.3 (3.1 to 25.3) & 99.4\% \\
+Age group & Under 23 & 15.3 (3.3 to 26.9) & 99.4\% \\
+Age group & Senior & 15.5 (3.4 to 27.1) & 99.4\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Population-weighted versus sample (unweighted) adjusted estimands. Weighting applies the age--sex poststratification of Table~\ref{tab:weight-diagnostics}.}
+\label{tab:weighted-vs-unweighted}
+\begin{tabular}{llrr}
+\toprule
+Period & Contrast & Unweighted, pp (95\% CrI) & Weighted, pp (95\% CrI) \\
+\midrule
+Preparation & Adoption difference & 5.4 ($-6.3$ to $16.2$) & 4.3 ($-6.5$ to $14.7$) \\
+Preparation & Dose difference & $-0.8$ ($-10.6$ to $9.1$) & $-0.3$ ($-10.5$ to $9.6$) \\
+Competition & Adoption difference & 4.8 ($-8.7$ to $17.7$) & 7.3 ($-5.6$ to $19.8$) \\
+Competition & Dose difference & 14.3 (2.7 to 25.8) & 14.9 (3.3 to 26.4) \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Model comparison and validation diagnostics for the primary (exposure) and matched baseline (no-exposure) models. ELPD: expected log predictive density (athlete-grouped PSIS-LOO); all Pareto-$k \leq 0.5$ for both models.}
+\label{tab:model-comparison}
+\begin{tabular}{lrrrr}
+\toprule
+Model & ELPD$_{\text{LOO}}$ & SE & Max $\hat{R}$ & Divergences \\
+\midrule
+Primary (exposure) & $-428.48$ & 11.13 & 1.003 & 0 \\
+Baseline (no exposure) & $-430.70$ & 10.98 & 1.002 & 0 \\
+\midrule
+\multicolumn{5}{l}{ELPD difference (exposure $-$ baseline): 2.22 (SE 2.30)} \\
+\bottomrule
+\end{tabular}
+\end{table}

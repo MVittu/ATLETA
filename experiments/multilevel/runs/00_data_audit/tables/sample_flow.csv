@@ -1,0 +1,2 @@
+"source_rows","eligible_rows","complete_timing_rows","balanced_analysis_athletes","period_records","preparation_injuries","competition_injuries","excluded_incomplete_timing","excluded_zero_period_total","source_file"
+355,355,354,352,704,115,149,1,2,"data/raw/recall/DSCBATLETAIT-CompleteCase_DATA_FINAL.csv"

@@ -1,0 +1,31 @@
+All statistical analyses were conducted in R. Table~\ref{tab:session-info} lists the software, model family, and sampling configuration used for the primary Bayesian multilevel model and its validation; runs used base seed 20260719 with deterministic model-specific offsets for reproducibility.
+
+\begin{table}[htbp]
+\centering
+\caption{Software, model, and posterior-sampling configuration.}
+\label{tab:session-info}
+\begin{tabular}{ll}
+\toprule
+Component & Version \\
+\midrule
+R & 4.5.2 (2025-10-31 ucrt), R Core Team \\
+Platform toolchain & Rtools 4.5 (x86\_64-w64-mingw32) \\
+rstan & 2.32.7 \\
+StanHeaders & 2.32.10 \\
+loo & 2.8.0 \\
+splines & 4.5.2 (base R) \\
+Model family & Bernoulli likelihood with logit link \\
+Sampler & Stan Hamiltonian Monte Carlo, No-U-Turn Sampler \\
+Chains $\times$ iterations & $4 \times 2000$ per fitted model \\
+Warm-up/adaptation & 1000 iterations per chain (discarded) \\
+Retained posterior draws & 1000 per chain; 4000 per fitted model \\
+Target acceptance probability & \texttt{adapt\_delta}=0.98 \\
+Maximum tree depth & 12 \\
+Random seed & 20260719 plus deterministic model-specific offsets \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{sloppypar}
+Model code (\texttt{model.\allowbreak stan}, \texttt{weighted\_\allowbreak model.\allowbreak stan}), the full analysis pipeline (\texttt{analysis.\allowbreak R}, \texttt{population\_\allowbreak analysis.\allowbreak R}), and every derived table and figure referenced in this manuscript are retained under \texttt{experiments/\allowbreak multilevel/} in the project repository. Re-running \texttt{experiments/\allowbreak multilevel/\allowbreak analysis.\allowbreak R} reproduces Tables~\ref{tab:sample-flow}, \ref{tab:primary-associations}, \ref{tab:sensitivity}, and \ref{tab:model-comparison} and Figures~\ref{fig:carbon-share-distribution}--\ref{fig:posterior-associations} from the source data file referenced in Section~\ref{sec:participants}.
+\end{sloppypar}
