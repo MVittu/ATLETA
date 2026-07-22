@@ -18,6 +18,17 @@ Individual survey responses, record identifiers, expert-validation exports, and 
 
 The recall scripts write participant-level intermediates to ignored paths under `data/processed/recall/`. Do not change those outputs to a tracked directory.
 
+## Use the fitted posterior without refitting
+
+The expensive Stan sampling results are already committed as compact posterior draws. Load the primary fit directly with base R:
+
+```r
+draws <- readRDS("experiments/multilevel/runs/01_primary/association/models/posterior_draws.rds")
+names(draws)
+```
+
+Saved draws for the baseline, sensitivity, population-weighted, and subgroup analyses are in the neighboring `runs/` directories. The ignored `model.rds` files are machine-specific compiled-model caches; they save compilation time, not sampling time, and are therefore not distributed.
+
 ## Reproduce
 
 Run commands from the repository root with R 4.5 or newer. The primary models require RStan and the packages loaded by each script.
