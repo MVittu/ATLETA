@@ -37,5 +37,3 @@ paper/latex/*.log
 paper/latex/*.out
 paper/latex/*.synctex.gz
 
-# Claude Code worktrees
-.claude/
