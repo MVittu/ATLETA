@@ -1,0 +1,2 @@
+"mode","seed","target_population","poststrata","target_n","sample_n","kish_effective_n","estimand_note"
+"full",20260719,"2026 Italian championship frame estimate","sex x age category",1328,352,340.508646706954,"Target-standardized descriptive associations; not causal or interaction estimates"

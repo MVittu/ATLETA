@@ -1,0 +1,2 @@
+"boundary_factor_c","boundary_L","num_basis_functions","matern_nu","share_center","gp_rho_prior_shape","gp_rho_prior_rate","gp_rho_prior_1pct","gp_rho_prior_99pct"
+1.5,0.75,40,2.5,0.5,2.9385393454067,0.798244577789877,0.0961539243282902,1.92307536002284

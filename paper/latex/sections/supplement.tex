@@ -82,49 +82,50 @@ Senior & Men & 184 & 60 & 17.0\% & 0.81 \\
 
 \begin{table}[htbp]
 \centering
-\caption{Age- and sex-conditional posterior estimate of the competition-period dose association (75th vs.\ 25th percentile carbon share among users), holding the primary model structure and covariate adjustment fixed. These are descriptive, hypothesis-generating comparisons (Section~\ref{sec:subgroups}), not independently powered tests of effect modification.}
+\caption{Age- and sex-conditional posterior estimate of the competition-period dose association (75th vs.\ 25th percentile carbon share among users) from the primary HSGP model, holding the model structure and covariate adjustment fixed. $P_{\mathrm{dir}}$ is the posterior probability of the median estimate's direction. These are descriptive, hypothesis-generating comparisons (Section~\ref{sec:subgroups}), not independently powered tests of effect modification.}
 \label{tab:subgroups}
 \begin{tabular}{llrr}
 \toprule
-Grouping & Level & Difference, pp (95\% CrI) & P(positive) \\
+Grouping & Level & Difference, pp (95\% CrI) & $P_{\mathrm{dir}}$ \\
 \midrule
-Sex & Men & 15.4 (3.3 to 26.9) & 99.4\% \\
-Sex & Women & 14.4 (3.2 to 25.5) & 99.4\% \\
-Age group & Under 20 & 14.3 (3.1 to 25.3) & 99.4\% \\
-Age group & Under 23 & 15.3 (3.3 to 26.9) & 99.4\% \\
-Age group & Senior & 15.5 (3.4 to 27.1) & 99.4\% \\
+Sex & Men & 14.0 ($-0.2$ to 30.6) & 96.8\% \\
+Sex & Women & 13.1 ($-0.1$ to 29.1) & 96.8\% \\
+Age group & Under 20 & 13.1 ($-0.1$ to 28.8) & 96.8\% \\
+Age group & Under 23 & 14.0 ($-0.2$ to 30.6) & 96.8\% \\
+Age group & Senior & 14.1 ($-0.2$ to 30.8) & 96.8\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Population-weighted versus sample (unweighted) adjusted estimands. Weighting applies the age--sex poststratification of Table~\ref{tab:weight-diagnostics}.}
+\caption{Population-weighted versus sample (unweighted) adjusted estimands from the primary HSGP model. Weighting applies the age--sex poststratification of Table~\ref{tab:weight-diagnostics}. $P_{\mathrm{dir}}$ is reported beside every 95\% CrI.}
 \label{tab:weighted-vs-unweighted}
-\begin{tabular}{llrr}
+\small
+\begin{tabular}{llrrrr}
 \toprule
-Period & Contrast & Unweighted, pp (95\% CrI) & Weighted, pp (95\% CrI) \\
+Period & Contrast & Unweighted, pp (95\% CrI) & $P_{\mathrm{dir}}$ & Weighted, pp (95\% CrI) & $P_{\mathrm{dir}}$ \\
 \midrule
-Preparation & Adoption difference & 5.4 ($-6.3$ to $16.2$) & 4.3 ($-6.5$ to $14.7$) \\
-Preparation & Dose difference & $-0.8$ ($-10.6$ to $9.1$) & $-0.3$ ($-10.5$ to $9.6$) \\
-Competition & Adoption difference & 4.8 ($-8.7$ to $17.7$) & 7.3 ($-5.6$ to $19.8$) \\
-Competition & Dose difference & 14.3 (2.7 to 25.8) & 14.9 (3.3 to 26.4) \\
+Preparation & Adoption difference & 6.5 ($-5.6$ to $19.2$) & 85.3\% & 4.8 ($-7.7$ to $16.8$) & 77.6\% \\
+Preparation & Dose difference & 0.0 ($-12.0$ to $10.2$) & 50.6\% & 0.3 ($-10.4$ to $10.4$) & 54.5\% \\
+Competition & Adoption difference & 4.7 ($-9.6$ to $18.6$) & 74.7\% & 7.1 ($-7.4$ to $20.6$) & 84.0\% \\
+Competition & Dose difference & 13.2 ($-0.2$ to 29.1) & 96.9\% & 13.7 ($-0.2$ to 30.0) & 96.8\% \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Model comparison and validation diagnostics for the primary (exposure) and matched baseline (no-exposure) models. ELPD: expected log predictive density (athlete-grouped PSIS-LOO); all Pareto-$k \leq 0.5$ for both models.}
+\caption{Model comparison and validation diagnostics for the primary HSGP (exposure) and matched baseline (no-exposure) models. ELPD: expected log predictive density (athlete-grouped PSIS-LOO); all Pareto-$k \leq 0.5$ for both models.}
 \label{tab:model-comparison}
 \begin{tabular}{lrrrr}
 \toprule
 Model & ELPD$_{\text{LOO}}$ & SE & Max $\hat{R}$ & Divergences \\
 \midrule
-Primary (exposure) & $-428.48$ & 11.13 & 1.003 & 0 \\
-Baseline (no exposure) & $-430.70$ & 10.98 & 1.002 & 0 \\
+Primary (exposure) & $-429.00$ & 11.14 & 1.005 & 0 \\
+Baseline (no exposure) & $-430.92$ & 11.03 & 1.007 & 0 \\
 \midrule
-\multicolumn{5}{l}{ELPD difference (exposure $-$ baseline): 2.22 (SE 2.30)} \\
+\multicolumn{5}{l}{ELPD difference (exposure $-$ baseline): 1.92 (SE 2.41)} \\
 \bottomrule
 \end{tabular}
 \end{table}
