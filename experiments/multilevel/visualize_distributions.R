@@ -49,6 +49,7 @@ domain_totals <- do.call(cbind, lapply(domains, function(domain) c(
   raw[[paste0("prep_carbon_", domain)]] + raw[[paste0("prep_no_carbon_", domain)]],
   raw[[paste0("gara_carbon_", domain)]] + raw[[paste0("gara_no_carbon_", domain)]]
 )))
+colnames(domain_totals) <- paste0(domains, "_total_z")
 domain_totals <- apply(domain_totals, 2L, z_score)
 palestra <- z_score(c(raw$prep_no_carbon_palestra, raw$gara_no_carbon_palestra))
 X <- as.matrix(cbind(
@@ -56,8 +57,13 @@ X <- as.matrix(cbind(
 ))
 
 discipline_counts <- colSums(raw[paste0("disciplina___", 1:11)])
-discipline <- as.matrix(raw[paste0("disciplina___", which(discipline_counts > 0))])
-discipline <- discipline[rep(seq_len(J), 2L), , drop = FALSE]
+discipline_athlete <- as.matrix(raw[paste0("disciplina___", which(discipline_counts > 0))])
+discipline_profile <- apply(discipline_athlete, 1L, paste0, collapse = "")
+reference_discipline <- discipline_athlete[
+  match(names(which.max(table(discipline_profile))), discipline_profile), ,
+  drop = FALSE
+]
+discipline <- discipline_athlete[rep(seq_len(J), 2L), , drop = FALSE]
 
 share_center <- median(share[any_carbon == 1])
 ns_fit <- splines::ns(share[any_carbon == 1], df = 3, Boundary.knots = c(0, 1))
@@ -134,40 +140,55 @@ theme_results <- theme_minimal(base_size = 13) +
     plot.subtitle = element_text(color = "grey30"), legend.position = "top"
   )
 
-# Exact posterior distributions for the four primary contrasts.
-posterior <- contrast_draws[contrast_draws$model == "primary", ]
-posterior$Period <- factor(c("Preparation", "Competition")[posterior$period],
-                           c("Preparation", "Competition"))
-posterior$Comparison <- factor(
-  paste(posterior$Period, tools::toTitleCase(posterior$estimand), sep = " - "),
-  c(
-    "Preparation - Adoption", "Preparation - Higher Share",
-    "Competition - Adoption", "Competition - Higher Share"
+# Profile-specific predictions from the existing primary model.
+draws <- readRDS(file.path(root, model_files[["primary"]]))
+reference_x <- apply(X, 2L, median)
+reference_base <- sapply(1:2, function(p) {
+  draws$alpha[, p] +
+    as.numeric(draws$beta_common %*% reference_x) +
+    as.numeric(draws$beta_discipline %*% as.numeric(reference_discipline))
+})
+adoption_draws <- do.call(rbind, lapply(1:2, function(p) {
+  nonuser <- plogis(reference_base[, p])
+  user <- plogis(reference_base[, p] + draws$beta_any[, p])
+  data.frame(
+    Period = factor(c("Preparation", "Competition")[p], c("Preparation", "Competition")),
+    nonuser = nonuser, user = user, difference = user - nonuser
   )
-)
-posterior_medians <- aggregate(value ~ Comparison + Period, posterior, median)
-p_posterior <- ggplot(posterior, aes(value, fill = Period)) +
-  annotate("rect", xmin = -0.02, xmax = 0.02, ymin = -Inf, ymax = Inf,
-           fill = "grey70", alpha = 0.2) +
-  geom_vline(xintercept = 0, color = "grey35", linetype = 2) +
-  geom_density(alpha = 0.82, color = "white", linewidth = 0.3) +
-  geom_point(data = posterior_medians, aes(value, 0), inherit.aes = FALSE,
-             shape = 21, fill = "white", color = "black", size = 2.6, stroke = 0.7) +
-  facet_grid(Comparison ~ ., scales = "free_y", switch = "y") +
-  scale_fill_manual(values = period_colors) +
-  scale_x_continuous(labels = scales::label_percent(accuracy = 1)) +
-  scale_y_continuous(NULL, breaks = NULL, expand = expansion(mult = c(0.04, 0.08))) +
-  labs(
-    title = "Full posterior distributions of adjusted associations",
-    subtitle = "Adoption: median user vs nonuser; higher share: Q75 vs Q25 among users",
-    x = "Adjusted prevalence difference", y = NULL,
-    caption = "Density is shown above the baseline; dot is the posterior median. Grey band: +/-2 percentage points."
+}))
+adoption_summary <- do.call(rbind, lapply(split(adoption_draws, adoption_draws$Period), function(x) {
+  do.call(rbind, lapply(c("nonuser", "user", "difference"), function(name) data.frame(
+    Period = x$Period[1], estimand = name, median = median(x[[name]]),
+    lower = unname(quantile(x[[name]], 0.025)),
+    upper = unname(quantile(x[[name]], 0.975))
+  )))
+}))
+adoption_difference <- adoption_summary[adoption_summary$estimand == "difference", ]
+
+p_posterior <- ggplot(adoption_draws, aes(Period, difference, fill = Period)) +
+  geom_hline(yintercept = 0, color = "grey35", linetype = 2) +
+  geom_violin(trim = FALSE, alpha = 0.78, color = "white", linewidth = 0.4) +
+  geom_pointrange(
+    data = adoption_difference,
+    aes(y = median, ymin = lower, ymax = upper),
+    color = "black", fill = "white", shape = 21, linewidth = 0.6
   ) +
-  theme_results +
-  theme(strip.placement = "outside", strip.background = element_blank(),
-        strip.text.y.left = element_text(angle = 0), panel.spacing.y = grid::unit(0.3, "lines"))
+  scale_fill_manual(values = period_colors, guide = "none") +
+  scale_y_continuous(labels = scales::label_percent(accuracy = 1)) +
+  labs(
+    title = "Adoption and profile-specific injury risk",
+    subtitle = sprintf(
+      "User at %.0f%% carbon share minus nonuser, with all other predictors fixed",
+      100 * share_center
+    ),
+    x = NULL, y = "Difference in predicted injury risk",
+    caption = "Violin: posterior distribution; dot and line: median and 95% credible interval.\nProfile: cohort medians, modal discipline indicators, athlete random effect = 0."
+  ) +
+  theme_results
 ggsave(file.path(plot_dir, "posterior_association_distributions.png"), p_posterior,
-       width = 9.5, height = 6, dpi = 300, bg = "white")
+       width = 8, height = 5.5, dpi = 300, bg = "white")
+ggsave(file.path("paper", "figures", "fig_posterior_association_distributions.png"), p_posterior,
+       width = 8, height = 5.5, dpi = 300, bg = "white")
 
 # Exact posterior distribution of the key result under all specifications.
 robust <- contrast_draws[
@@ -229,62 +250,76 @@ p_observed <- ggplot(observed, aes(share, fill = Period)) +
 ggsave(file.path(plot_dir, "observed_carbon_share_distribution.png"), p_observed,
        width = 9.5, height = 7, dpi = 300, bg = "white")
 
-# Exact fitted spline among users, relative to the centered 50% share.
-draws <- readRDS(file.path(root, model_files[["primary"]]))
-share_grid <- seq(min(share[any_carbon == 1]), max(share[any_carbon == 1]), length.out = 121)
-grid_basis <- basis_spline(share_grid)
-spline_curve <- do.call(rbind, lapply(1:2, function(p) {
-  odds_ratio <- exp(grid_basis %*% t(draws$beta_share[, p, ]))
+# Absolute fitted risk among users with both periods shown on the same reference profile.
+user_ranges <- tapply(share[any_carbon == 1], period[any_carbon == 1], range)
+share_grid <- seq(max(vapply(user_ranges, `[`, numeric(1), 1L)),
+                  min(vapply(user_ranges, `[`, numeric(1), 2L)), length.out = 121)
+profile_risk_draws <- function(values, p) {
+  eta <- sweep(basis_spline(values) %*% t(draws$beta_share[, p, ]), 2L,
+               reference_base[, p] + draws$beta_any[, p], "+")
+  plogis(eta)
+}
+profile_risk <- function(values, p) {
+  risk <- profile_risk_draws(values, p)
   data.frame(
     Period = factor(c("Preparation", "Competition")[p], c("Preparation", "Competition")),
-    share = share_grid,
-    median = apply(odds_ratio, 1, median),
-    lower = apply(odds_ratio, 1, quantile, 0.025),
-    upper = apply(odds_ratio, 1, quantile, 0.975)
+    share = values,
+    median = apply(risk, 1, median),
+    lower = apply(risk, 1, quantile, 0.025),
+    upper = apply(risk, 1, quantile, 0.975)
+  )
+}
+spline_curve <- do.call(rbind, lapply(1:2, function(p) profile_risk(share_grid, p)))
+selected_risks <- do.call(rbind, lapply(1:2, function(p) profile_risk(c(0.25, 0.5, 0.75), p)))
+share_contrasts <- do.call(rbind, lapply(1:2, function(p) {
+  risk <- profile_risk_draws(c(0.25, 0.75), p)
+  difference <- risk[2, ] - risk[1, ]
+  data.frame(
+    contrast = "75% minus 25%", Period = c("Preparation", "Competition")[p],
+    median = median(difference), lower = unname(quantile(difference, 0.025)),
+    upper = unname(quantile(difference, 0.975))
+  )
+}))
+phase_contrasts <- do.call(rbind, lapply(c(0.25, 0.5, 0.75), function(value) {
+  difference <- profile_risk_draws(value, 2) - profile_risk_draws(value, 1)
+  data.frame(
+    contrast = "competition minus preparation", share = value,
+    median = median(difference), lower = unname(quantile(difference, 0.025)),
+    upper = unname(quantile(difference, 0.975))
   )
 }))
 user_support <- observed[observed$share > 0, ]
-knots <- data.frame(share = attr(ns_fit, "knots"))
-knots$xmin <- knots$share - 0.009
-knots$xmax <- knots$share + 0.009
-knot_curve <- do.call(rbind, lapply(1:2, function(p) {
-  odds_ratio <- exp(basis_spline(knots$share) %*% t(draws$beta_share[, p, ]))
-  data.frame(
-    Period = factor(c("Preparation", "Competition")[p], c("Preparation", "Competition")),
-    share = knots$share, median = apply(odds_ratio, 1, median)
-  )
-}))
-knot_labels <- data.frame(
-  Period = factor("Preparation", c("Preparation", "Competition")),
-  share = knots$share,
-  label = sprintf("Knot %d\n%.1f%%", seq_along(knots$share), 100 * knots$share)
-)
-stopifnot(length(knots$share) == 2L, all(spline_curve$lower <= spline_curve$median),
-          all(spline_curve$median <= spline_curve$upper), nrow(knot_curve) == 4L)
+stopifnot(all(spline_curve$lower <= spline_curve$median),
+          all(spline_curve$median <= spline_curve$upper))
+
+profile_dir <- file.path(root, "runs", "05_profile_predictions", "tables")
+dir.create(profile_dir, recursive = TRUE, showWarnings = FALSE)
+write.csv(adoption_summary, file.path(profile_dir, "adoption_risk.csv"), row.names = FALSE)
+write.csv(selected_risks, file.path(profile_dir, "share_risk_selected.csv"), row.names = FALSE)
+write.csv(share_contrasts, file.path(profile_dir, "share_risk_contrast.csv"), row.names = FALSE)
+write.csv(phase_contrasts, file.path(profile_dir, "period_risk_contrast.csv"), row.names = FALSE)
+write.csv(spline_curve, file.path(profile_dir, "share_risk_curve.csv"), row.names = FALSE)
+write.csv(rbind(
+  data.frame(type = "covariate", term = colnames(X), value = reference_x),
+  data.frame(type = "discipline_indicator", term = colnames(discipline_athlete),
+             value = as.numeric(reference_discipline)),
+  data.frame(type = "random_effect", term = "athlete", value = 0)
+), file.path(profile_dir, "reference_profile.csv"), row.names = FALSE)
 
 p_spline <- ggplot(spline_curve, aes(share, median, color = Period, fill = Period)) +
-  geom_hline(yintercept = 1, color = "grey45", linewidth = 0.4) +
-  geom_rect(data = knots, aes(xmin = xmin, xmax = xmax), ymin = -Inf, ymax = Inf,
-            inherit.aes = FALSE, fill = "#F2C94C", alpha = 0.22) +
-  geom_vline(data = knots, aes(xintercept = share), inherit.aes = FALSE,
-             color = "#6B5700", linetype = 2, linewidth = 0.75) +
-  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.22, color = NA) +
+  geom_ribbon(aes(ymin = lower, ymax = upper), alpha = 0.18, color = NA) +
   geom_line(linewidth = 1.1) +
-  geom_point(data = knot_curve, shape = 21, fill = "white", size = 3, stroke = 0.9) +
-  geom_label(data = knot_labels, aes(share, Inf, label = label), inherit.aes = FALSE,
-             vjust = 1.15, size = 3.2, linewidth = 0.2, fill = "#FFF6CC") +
   geom_rug(data = user_support, aes(x = share, color = Period), inherit.aes = FALSE,
            sides = "b", alpha = 0.16, length = grid::unit(0.035, "npc")) +
-  facet_wrap(~Period, ncol = 1) +
-  scale_color_manual(values = period_colors, guide = "none") +
-  scale_fill_manual(values = period_colors, guide = "none") +
+  scale_color_manual(values = period_colors) +
+  scale_fill_manual(values = period_colors) +
   scale_x_continuous(labels = scales::label_percent(accuracy = 1), breaks = seq(0, 1, 0.2)) +
-  scale_y_continuous(labels = scales::label_number(accuracy = 0.1)) +
+  scale_y_continuous(labels = scales::label_percent(accuracy = 1), limits = c(0, 1)) +
   labs(
-    title = "Fitted carbon-share dose response among users",
-    subtitle = "Conditional injury odds relative to a user with 50% carbon share",
-    x = "Carbon share of reported weekly type-frequency counts", y = "Odds ratio",
-    caption = "Line: posterior median; band: 95% credible interval; rug: observed user shares. Gold bands and outlined points mark the spline knots."
+    title = "Profile-specific injury risk across carbon share",
+    subtitle = "Preparation and competition predictions for the same reference profile",
+    x = "Carbon share of reported weekly type-frequency counts", y = "Predicted injury risk",
+    caption = "Natural-spline posterior median and 95% credible interval; rug: observed shares.\nProfile: cohort medians, modal discipline indicators, athlete random effect = 0."
   ) +
   theme_results
 ggsave(file.path(plot_dir, "spline_dose_response.png"), p_spline,
