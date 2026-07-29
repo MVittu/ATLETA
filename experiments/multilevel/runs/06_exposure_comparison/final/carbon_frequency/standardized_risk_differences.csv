@@ -1,0 +1,3 @@
+"exposure","period","contrast","raw_from","raw_to","risk_from_median","risk_to_median","median","lower_95","upper_95","probability_positive"
+"carbon_frequency","preparation","one_SD_increase_among_users",2.83177438640668,6.19343569762693,0.46183377435301,0.476570767315176,0.0152567583619244,-0.069306221361679,0.0943898374403921,0.6315
+"carbon_frequency","competition","one_SD_increase_among_users",2.83177438640668,6.19343569762693,0.511656535737883,0.595639328657703,0.0833459583583489,0.0162656044824844,0.158549801806391,0.9915
