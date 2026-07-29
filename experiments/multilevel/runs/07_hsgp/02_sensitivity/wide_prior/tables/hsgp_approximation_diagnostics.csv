@@ -1,0 +1,3 @@
+"model","period","max_spd_ratio_M_over_1","q99_spd_ratio_M_over_1","adequate_M"
+"sensitivity_gp_wide_prior","preparation",0.00223957824510331,0.000264800475610843,TRUE
+"sensitivity_gp_wide_prior","competition",0.00273331549255603,0.000152064900353782,TRUE
