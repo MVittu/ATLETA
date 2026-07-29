@@ -22,10 +22,10 @@ Period injury is derived from the reported injury timing. Codes 1 or 3 identify 
 
 For each period, carbon share is
 
-\[
+$$
 \text{carbon share} = \frac{\text{sum of five carbon frequency items}}
 {\text{sum of carbon and non-carbon frequency items}}.
-\]
+$$
 
 The five domains are long endurance, middle endurance, lactate, maximum velocity, and technique. Each item is a top-coded weekly frequency count (0, 1, 2, 3, 4, or 5+ sessions/week); the exported data encode 5+ as 5. The sums therefore approximate reported type-specific weekly frequency, not minutes, workload, or necessarily unique sessions. `Palestra` is kept as a separate non-carbon adjustment variable because it has no matching carbon item.
 

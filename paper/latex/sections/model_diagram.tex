@@ -15,7 +15,7 @@
 
 
   \node[latent]                  (alpha)        at (-1.0, 0)     {$\alpha_p$\\$\mathcal N(\operatorname{logit}(0.4),1.5^2)$};
-  \node[latent]                  (exposurecoef) at (4.7, 0)      {$\beta^{\mathrm{any}}_p,\boldsymbol\beta^{\mathrm{share}}_p$\\$\mathcal N(0,0.7^2)$};
+  \node[latent]                  (exposurecoef) at (4.7, 0)      {$\beta^{\mathrm{any}}_p\sim\mathcal N(0,0.7^2)$\\$\boldsymbol\beta^{\mathrm{share}}_p\mid\alpha^{\mathrm{gp}}_p,\rho^{\mathrm{gp}}_p$ (HSGP)};
   \node[latent]                  (commoncoef)   at (10.0, 0)     {$\boldsymbol\beta$\\$\mathcal N(0,0.5^2)$};
   \node[latent]                  (discscale)    at (13.5, 0)     {$\tau_{\mathrm{disc}}$\\$\operatorname{Half\text{-}N}(0,0.5^2)$};
   \node[latent]                  (athscale)     at (17.5, 0)     {$\sigma_u$\\$\operatorname{Half\text{-}N}(0,1^2)$};
@@ -103,6 +103,6 @@
   \node[anchor=west, align=left] at ([xshift=3mm]modelplate.east) {$352$ athletes\\$\times\,2$ periods};
 \end{tikzpicture}%
 }
-\caption{Graphical representation of the primary Bayesian multilevel model. Grey boxes are observed inputs, blue ellipses are estimated parameters, green boxes are deterministic contributions to the linear predictor, and shaded ellipses are the two observed period-specific injury outcomes, jointly enclosed in the solid plate (352 athletes $\times$ 2 periods). The carbon contribution $c_{ip}$ combines adoption ($A_{ip}$, any carbon use) and dose ($\mathbf B(s_{ip})$, the centered three-degree-of-freedom natural-spline basis for carbon share among users). $\mathbf Z_i$ denotes the seven discipline indicators underlying the partially pooled coefficients $\delta_d$, and $u_i$ the shared athlete random intercept. The common model structure is evaluated separately as $\eta_{i,\mathrm{prep}}$ and $\eta_{i,\mathrm{comp}}$; each predictor points only to its corresponding outcome. The dashed box is the derived any-period injury indicator reported descriptively, outside the probabilistic-model plate, and is not an additional likelihood term.}
+\caption{Graphical representation of the primary Bayesian multilevel model. Grey boxes are observed inputs, blue ellipses are estimated parameters, green boxes are deterministic contributions to the linear predictor, and shaded ellipses are the two observed period-specific injury outcomes, jointly enclosed in the solid plate (352 athletes $\times$ 2 periods). The carbon contribution $c_{ip}$ combines adoption ($A_{ip}$, any carbon use) and dose ($\mathbf B(s_{ip})$, the centered Hilbert-space Gaussian-process basis for carbon share among users, with 40 basis functions and period-specific marginal-standard-deviation and length-scale hyperparameters $\alpha^{\mathrm{gp}}_p,\rho^{\mathrm{gp}}_p$ not shown separately for space). $\mathbf Z_i$ denotes the seven discipline indicators underlying the partially pooled coefficients $\delta_d$, and $u_i$ the shared athlete random intercept. The common model structure is evaluated separately as $\eta_{i,\mathrm{prep}}$ and $\eta_{i,\mathrm{comp}}$; each predictor points only to its corresponding outcome. The dashed box is the derived any-period injury indicator reported descriptively, outside the probabilistic-model plate, and is not an additional likelihood term.}
 \label{fig:primary-model-graph}
 \end{figure}
